@@ -1,0 +1,78 @@
+{% load staticfiles %}
+<html>
+
+
+<head>
+<link rel="stylesheet" href="{% static 'css/CreDB.css' %}">
+</head>
+
+
+<body>
+
+<div class="page-header">
+    <h1>Chlamydomonas reinhardtii database</a></h1>
+</div>
+<div class="info">
+ <hr style="border: dotted 2px gray;">
+ <h2> Selected transcript name : {{ DBex.genename }} ({{DBex.CDS|length}} bp) </h2>
+
+ <h3> RNAseq coverage based gene model evaluation </h3>
+    <div>
+        <table width=500>
+         <tr>
+          <th>Cov.1x</th>
+          <th>Cov.10x</th>
+          <th>Cov.30x</th>
+          <th>Depth.ratio</th>
+          <th>Cov.1x.match</th>
+         </tr>
+         <tr>
+          <td>{{DBex.cov_1x}}</td>
+          <td>{{DBex.cov_10x}}</td>
+          <td>{{DBex.cov_30x}}</td>
+          <td>{{DBex.depth_ratio}}</td>
+          <td>{{DBex.match_ratio}}</td>
+         </tr>
+        </table>
+    </div>
+
+ <h3> RNAseq-based gene model reconsturction using stringtie pipeline </h3>
+    <div>
+        <table width=500>
+         <tr>
+          <th class="linebreak"><p>RNAseqcov</p></th>
+          <th class="linebreak"><p>stringtie complete</p></th>
+          <th class="linebreak"><p>stringtie partial</p></th>
+          <th class="linebreak"><p>stringtie isoform</p></th>
+          <th class="linebreak"><p>ORFannot complete</p></th>
+          <th class="linebreak"><p>ORFannot partial</p></th>
+          <th class="linebreak"><p>ORFannot isoform</p></th>
+          <th class="linebreak"><p>score</p></th>
+          <th class="linebreak"><p>length</p></th>
+         </tr>
+         <tr>
+          <td>{{final.RNAseqcov}}</td>
+          <td>{{final.stringtie_complete}}</td>
+          <td>{{final.stringtie_partial}}</td>
+          <td>{{final.stringtie_isoform}}</td>
+          <td>{{final.ORFannot_complete}}</td>
+          <td>{{final.ORFannot_partial}}</td>
+          <td>{{final.ORFannot_isoform}}</td>
+          <td>{{final.score}}</td>
+          <td>{{final.length}}</td>
+         </tr>
+        </table>
+    </div>
+ <h3> RNAseq alignments visualization </h3>
+    <img src="/static/alignments/{{ DBex.genename }}.bamvisgene.svg"/> 
+ <hr style="border: dotted 2px gray;">
+ <h2>Additional information</h2>
+ <h3>CDS sequence</h3>
+    <div class='seq'>
+        <textarea cols="100" rows="5">
+        {{DBex.CDS}}
+        </textarea>        
+    </div>
+</div>
+</body>
+</html>

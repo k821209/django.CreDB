@@ -1,0 +1,70 @@
+{% load staticfiles %}
+<html>
+
+
+<head>
+<link rel="stylesheet" href="{% static 'css/CreDB.css' %}">
+</head>
+
+
+<body>
+
+<div class="page-header">
+    <h1>Chlamydomonas reinhardtii database</a></h1>
+</div>
+
+
+
+<div class="info">
+ 
+ <div>
+ <h2> Search gene name (ex. Cre05.g245701) </h2>
+ <form method=POST>
+ {% csrf_token %}
+ {{form}}
+ <input type="submit" value="Submit"/>
+ </form>
+ </div>
+
+ <hr style="border: dotted 2px gray;">
+
+ <h2> Selected gene name : {{ final.0.genename }} </h2>
+ <h3> Gene descritpion as of phytozome v.11 (2016)</h3>
+<div class="box-radius" width=500>
+ <p> {{annotation.annotation}} </p>
+</div>
+ <h3> RNAseq-based gene model reconsturction using stringtie pipeline </h3>
+    <div>
+        <table>
+         <tr>
+          <th class="linebreak"><p>Transcriptname</p></th>
+          <th class="linebreak"><p>RNAseqcov</p></th>
+          <th class="linebreak"><p>stringtie complete</p></th>
+          <th class="linebreak"><p>stringtie partial</p></th>
+          <th class="linebreak"><p>stringtie isoform</p></th>
+          <th class="linebreak"><p>ORFannot complete</p></th>
+          <th class="linebreak"><p>ORFannot partial</p></th>
+          <th class="linebreak"><p>ORFannot isoform</p></th>
+          <th class="linebreak"><p>score</p></th>
+          <th class="linebreak"><p>length</p></th>
+         </tr>
+         {% for efinal in final %}
+         <tr>
+          <td><a href="{% url 'detail' transcript_name=efinal.transcriptname %}">{{efinal.transcriptname}}</a></td>
+          <td>{{efinal.RNAseqcov}}</td>
+          <td>{{efinal.stringtie_complete}}</td>
+          <td>{{efinal.stringtie_partial}}</td>
+          <td>{{efinal.stringtie_isoform}}</td>
+          <td>{{efinal.ORFannot_complete}}</td>
+          <td>{{efinal.ORFannot_partial}}</td>
+          <td>{{efinal.ORFannot_isoform}}</td>
+          <td>{{efinal.score}}</td>
+          <td>{{efinal.length}}</td>
+         </tr>
+         {% endfor %}
+        </table>
+    </div>
+ <hr style="border: dotted 2px gray;">
+</div>
+</body>
+</html>
